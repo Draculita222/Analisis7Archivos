@@ -1,4 +1,4 @@
-package mati.a7a.unique;
+package mati.a7a.validations;
 
 import mati.a7a.columns.IColumn;
 

@@ -3,9 +3,8 @@ package mati.a7a.files;
 import mati.a7a.columns.IColumn;
 import mati.a7a.main.ProcessException;
 import mati.a7a.results.*;
-import mati.a7a.unique.UniqueA;
+import mati.a7a.validations.UniqueA;
 
-import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -35,10 +34,77 @@ public abstract class AbstractFile implements IFile {
     }
 
     @Override
-    public Optional<FileValidationError> validateFileName() {
-        if(!name.startsWith(getBaseName())) {
-            return Optional.of(new FileValidationError(this, "Nombre de archivo inválido", Optional.empty()));
+    public Optional<FileValidationError> validateFileName(String code) {
+        String err = "Nombre de archivo inválido. ";
+
+        if(name.replace(".csv", "").length() != (getBaseName().length() + 2 + 4 + 4 + 2 + 2 + 2  + 2 + 2)) {
+            return Optional.of(new FileValidationError(this, err + "Longitud inválida", Optional.empty()));
         }
+
+        if(!name.startsWith(getBaseName())) {
+            return Optional.of(new FileValidationError(this, err + "Debe comenzar con " + getBaseName(), Optional.empty()));
+        }
+
+        String afterBase = name.substring(getBaseName().length(), name.length());
+
+        if(!afterBase.startsWith("00")) {
+            return Optional.of(new FileValidationError(this, err + "Despues del nombre debe ir 00", Optional.empty()));
+        }
+
+        String after00 = afterBase.substring(2, afterBase.length());
+        if(!after00.startsWith(code)) {
+            return Optional.of(new FileValidationError(this, err + "Despues de 00 debe ir el código de la empresa", Optional.empty()));
+        }
+
+        String afterCode = after00.substring(4, after00.length());
+        String yearStr = afterCode.substring(0, 4);
+        try {
+            Integer.parseInt(yearStr);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de año inválido", Optional.empty()));
+        }
+
+        String monthStr = afterCode.substring(4, 6);
+        try {
+            Integer.parseInt(monthStr);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de més inválido", Optional.empty()));
+        }
+
+        String day = afterCode.substring(6, 8);
+        try {
+            Integer.parseInt(day);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de día inválido", Optional.empty()));
+        }
+
+        String afterDate = afterCode.substring(8, afterCode.length());
+        String hourStr = afterDate.substring(0, 2);
+        try {
+            Integer.parseInt(hourStr);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de hora inválido", Optional.empty()));
+        }
+
+        String minuteStr = afterDate.substring(2, 4);
+        try {
+            Integer.parseInt(minuteStr);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de minuto inválido", Optional.empty()));
+        }
+
+        String secondsStr = afterDate.substring(4, 6);
+        try {
+            Integer.parseInt(secondsStr);
+        } catch (NumberFormatException e) {
+            return Optional.of(new FileValidationError(this, err + "Formato de segundos inválido", Optional.empty()));
+        }
+
+        String afterTime = afterDate.substring(2 + 2 + 2, afterDate.length());
+        if(!afterTime.equals(".csv")) {
+            return Optional.of(new FileValidationError(this, err + "Formato de archivo inválido. Debe ser .csv", Optional.empty()));
+        }
+
         return Optional.empty();
     }
 

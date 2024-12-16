@@ -14,8 +14,8 @@ public class FileLoader {
         }
 
         String[] list = directory.list();
-        // MMEROI cambiar
-        if(list.length != 2) {
+
+        if(list.length != 7) {
             throw new ProcessException("Cantidad invalida de archivos en la carpeta seleccionada");
         }
 
@@ -37,29 +37,11 @@ public class FileLoader {
                 throw new ProcessException("No se reconoce archivo: " + fileName);
             }
 
-            File f = null;
-            switch (stereotype) {
-                case A -> {
-                    f = new File(directory.getAbsolutePath() + "/" + fileName);
-                }
-                case B -> {
-                    f = new File(directory.getAbsolutePath() + "/" + fileName);
-                }
-                case C -> {
-                }
-                case D -> {
-                }
-                case E -> {
-                }
-                case F -> {
-                }
-                case G -> {
-                }
+            if(result.containsKey(stereotype)) {
+                throw new ProcessException("Archivo duplicado: " + fileName);
             }
 
-            if(result.containsKey(stereotype)) {
-               throw new ProcessException("Archivo duplicado: " + fileName);
-            }
+            File f = new File(directory.getAbsolutePath() + "/" + fileName);
 
             result.put(stereotype, f);
         }

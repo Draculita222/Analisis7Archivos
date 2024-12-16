@@ -1,9 +1,7 @@
-package mati.a7a.unique;
+package mati.a7a.validations;
 
 import mati.a7a.columns.IColumn;
 import mati.a7a.main.ProcessException;
-import mati.a7a.results.ValidationError;
-import mati.a7a.results.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;

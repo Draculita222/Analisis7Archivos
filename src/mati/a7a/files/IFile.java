@@ -19,7 +19,7 @@ public interface IFile {
     public List<IColumn> getColums();
     public List<Row> getRows();
 
-    public Optional<FileValidationError> validateFileName();
+    public Optional<FileValidationError> validateFileName(String code);
     public List<FileValidationError> getLoadingErrors();
     public abstract ValidationResult validateFile() throws ProcessException;
 

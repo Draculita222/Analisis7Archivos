@@ -42,11 +42,6 @@ public class ReportBuilder {
 
         FileStereotype[] processingOrder = FileStereotype.getProcessingOrder();
         for(FileStereotype stereotype : processingOrder) {
-            // MMEROI QUITAR
-            if(stereotype.equals(FileStereotype.C)) {
-                break;
-            }
-
             String baseName = stereotype.baseName;
 
             result += "\n" + baseName;

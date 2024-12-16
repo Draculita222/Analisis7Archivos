@@ -5,11 +5,11 @@ import mati.a7a.results.ValidationResult;
 import java.util.Arrays;
 import java.util.List;
 
-public class BooleanColumn extends PredefColumn {
+public class CargoColumn extends PredefColumn {
 
-    private final static List<String> validValues = Arrays.asList("yes", "no", "si", "1", "0");
+    private final static List<String> validValues = Arrays.asList("V", "S", "G");
 
-    public BooleanColumn(String name, boolean isRequired, boolean isUnique) {
+    public CargoColumn(String name, boolean isRequired, boolean isUnique) {
         super(name, isRequired, isUnique, validValues);
     }
 

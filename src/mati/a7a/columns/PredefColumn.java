@@ -14,15 +14,23 @@ public abstract class PredefColumn extends AbstractColumn {
         this.possibleValues = possibleValues;
     }
 
+    public List<String> getPossibleValues() {
+        return possibleValues;
+    }
+
     public void overridePossibleValues(List<String> newValues) {
         possibleValues.clear();
         possibleValues.addAll(newValues);
     }
 
-    public void validateValueExists(ValidationResult result, String input) {
+    public void validateValueExists(ValidationResult result, String input, boolean anyCase) {
         boolean exists = false;
         for(String ok : possibleValues) {
-            if(ok.toLowerCase().equals(input.toLowerCase())) {
+            if(anyCase && ok.toLowerCase().equals(input.toLowerCase())) {
+                exists = true;
+                break;
+            }
+            if(!anyCase && ok.toLowerCase().equals(input)) {
                 exists = true;
                 break;
             }
