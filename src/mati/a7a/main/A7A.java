@@ -98,6 +98,7 @@ public class A7A implements ActionListener {
         List<String> clientCodes = null;
         List<String> codigosArticulos = null;
         List<String> sucursales = null;
+        List<String> personal = null;
         List<String> fuerzas = null;
         List<String> rutas = null;
 
@@ -122,6 +123,7 @@ public class A7A implements ActionListener {
                     oneFile.load(rawFile);
                     ((PersonalComercial) oneFile).setSucursales(sucursales);
                     fuerzas = ((PersonalComercial) oneFile).getAllValuesForColumn(PersonalComercial.codigoFuerza);
+                    personal = ((PersonalComercial) oneFile).getAllValuesForColumn(PersonalComercial.codigoPersonal);
                 }
                 case CLIENTES_EN_RUTA -> {
                     oneFile = new ClientesRuta(stereotype, name);
@@ -143,6 +145,11 @@ public class A7A implements ActionListener {
                 }
                 case COMPROBANTES -> {
                     oneFile = new Comprobantes(stereotype, name);
+                    ((Comprobantes) oneFile).setArticulos(codigosArticulos);
+                    ((Comprobantes) oneFile).setClientes(clientCodes);
+                    ((Comprobantes) oneFile).setPersonal(personal);
+                    ((Comprobantes) oneFile).setSucursales(sucursales);
+                    ((Comprobantes) oneFile).setFuerzas(fuerzas);
                 }
             }
 
