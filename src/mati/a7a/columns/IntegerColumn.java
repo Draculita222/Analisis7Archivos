@@ -20,7 +20,9 @@ public class IntegerColumn extends AbstractColumn {
     @Override
     public ValidationResult validateData(String input) {
         ValidationResult result = new ValidationResult();
-
+        if(input.isEmpty()) {
+        	return result;
+        }
         if(input.contains(Config.DECIMAL_SEP)) {
             result.addError(new ValidationError(this, "Valor no entero"));
             return result;

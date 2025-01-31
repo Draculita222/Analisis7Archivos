@@ -29,7 +29,7 @@ public class A7A implements ActionListener {
         window = new JFrame("Análisis 7 archivos");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        window.setSize(new Dimension(300, 100));
+        window.setSize(new Dimension(350, 150));
         window.setResizable(false);
 
         window.setLayout(new FlowLayout());
@@ -146,7 +146,6 @@ public class A7A implements ActionListener {
                 case STOCK_FISICO : {
                     oneFile = new StockFisico(stereotype, name);
                     oneFile.load(rawFile);
-                    ((StockFisico) oneFile).setCodigosArticulos(codigosArticulos);
                     ((StockFisico) oneFile).setCodigosArticulos(codigosArticulos);
                     break;
                 }

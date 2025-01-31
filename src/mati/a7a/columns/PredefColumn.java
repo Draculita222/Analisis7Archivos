@@ -30,7 +30,7 @@ public abstract class PredefColumn extends AbstractColumn {
                 exists = true;
                 break;
             }
-            if(!anyCase && ok.toLowerCase().equals(input)) {
+            if(!anyCase && ok.equals(input)) {
                 exists = true;
                 break;
             }

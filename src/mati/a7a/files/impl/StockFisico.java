@@ -27,24 +27,17 @@ public class StockFisico extends AbstractFile {
                     fechaStock
             );
 
-    private List<String> codigosArticulos;
 
     public StockFisico(FileStereotype stereotype, String name) {
         super(stereotype, name, columns);
     }
 
     public void setCodigosArticulos(List<String> codigosArticulos) {
-        this.codigosArticulos = new ArrayList<>();
-        for (String c : codigosArticulos) {
-            if (!codigosArticulos.contains(c)) {
-                this.codigosArticulos.add(c);
-            }
-        }
-        ((ReferentialPredefColumn) codigoArticulo).overridePossibleValues(this.codigosArticulos);
+        ((ReferentialPredefColumn) codigoArticulo).overridePossibleValues(codigosArticulos);
     }
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         ValidationResult result = new ValidationResult();
 
         int nArticulosPosibles = ((ReferentialPredefColumn) codigoArticulo).getPossibleValues().size();

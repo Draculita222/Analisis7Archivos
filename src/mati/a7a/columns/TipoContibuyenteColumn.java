@@ -17,6 +17,9 @@ public class TipoContibuyenteColumn extends PredefColumn {
     public ValidationResult validateData(String input) {
         ValidationResult validationResult = new ValidationResult();
         this.validateIsRequiered(validationResult, input);
+        if(input.isEmpty()) {
+        	return validationResult;
+        }
         this.validateValueExists(validationResult, input, false);
         return validationResult;
     }

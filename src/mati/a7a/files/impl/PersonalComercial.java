@@ -21,7 +21,7 @@ public class PersonalComercial extends AbstractFile {
     public static final IColumn cargo = new CargoColumn("Cargo", true, false);
     public static final IColumn anulado = new BooleanColumn("Anulado", true, false);
     public static final IColumn codigoPersonalSuperior = new IntegerColumn("CodigoPersonalSuperior", true, false, 10);
-    public static final IColumn codigoFuerza = new ReferentialPredefColumn("CodigoFuerza", true, false, 10);
+    public static final IColumn codigoFuerza = new IntegerColumn("CodigoFuerza", true, false, 10);
 
     private static final List<IColumn> columns =
             Arrays.asList(
@@ -41,9 +41,10 @@ public class PersonalComercial extends AbstractFile {
     public void setSucursales(List<String> sucursales) {
         ((ReferentialPredefColumn) PersonalComercial.codigoSucursal).overridePossibleValues(sucursales);
     }
+    
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         ValidationResult result = new ValidationResult();
 
         Map<String, String> persona2Cargo = new HashMap<>();
@@ -54,16 +55,17 @@ public class PersonalComercial extends AbstractFile {
         }
 
         for(Row r : getRows()) {
-
             String cargoActual = r.map.get(PersonalComercial.cargo);
             String refSuperior = r.map.get(codigoPersonalSuperior);
-            if(!persona2Cargo.containsKey(refSuperior)) {
+            if(refSuperior != null && !persona2Cargo.containsKey(refSuperior)) {
                 result.addError(
                         new ValidationError(codigoPersonal,
                                 "El personal con código " + r.map.get(codigoPersonal) + " apunta a un superior inexistente"));
                 continue;
             }
-
+            if(refSuperior == null) {
+            	continue;
+            }
             String cargoSuperior = persona2Cargo.get(refSuperior).toLowerCase();
             boolean invalid =
                     (cargoActual.equals("G") && (cargoSuperior.equals("S") || cargoSuperior.equals("V"))) ||

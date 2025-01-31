@@ -1,6 +1,7 @@
 package mati.a7a.validations;
 
 import mati.a7a.columns.IColumn;
+import mati.a7a.files.IndexAndValue;
 import mati.a7a.main.ProcessException;
 
 import java.util.ArrayList;
@@ -18,21 +19,20 @@ import java.util.Map;
  * */
 public class UniqueA2UniqueB {
 
-    public Map<String, List<String>> analize(IColumn a, IColumn b, List<String> valuesA, List<String> valuesB) throws ProcessException {
-        if(valuesA.size() != valuesB.size()) {
-            throw new ProcessException("Error al analizar unicidad para columnas: " + a.getName() + " y " + b.getName());
-        }
-
+    public Map<String, List<String>> analize(IColumn a, IColumn b, List<IndexAndValue> valuesA, List<IndexAndValue> valuesB) throws ProcessException {
         Map<String, List<String>> countMap = new HashMap<>();
         for(int i = 0; i < valuesA.size(); i++) {
-            String va = valuesA.get(i);
-            String vb = valuesB.get(i);
-            if(!countMap.containsKey(va)) {
-                countMap.put(va, new ArrayList<>());
+        	IndexAndValue va = valuesA.get(i);
+        	IndexAndValue vb = valuesB.get(i);
+        	if(va == null || vb == null) {
+        		continue;
+        	}
+            if(!countMap.containsKey(va.value)) {
+                countMap.put(va.value, new ArrayList<>());
             }
-            List<String> values = countMap.get(va);
-            if(!values.contains(vb)) {
-                values.add(vb);
+            List<String> values = countMap.get(va.value);
+            if(!values.contains(vb.value)) {
+                values.add(vb.value);
             }
         }
 

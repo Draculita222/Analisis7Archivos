@@ -11,14 +11,14 @@ import java.util.List;
 
 public class Clientes extends AbstractFile {
 
-    public static final IColumn codigoSucursal = new IntegerColumn("CodigoSucursal", true, true, 10);
+    public static final IColumn codigoSucursal = new IntegerColumn("CodigoSucursal", true, false, 10);
     public static final IColumn codigoCliente = new TextColumn("CodigoCliente", true, true, 50);
     public static final IColumn nombre = new TextColumn("Nombre", true, false, 100);
     public static final IColumn domicilio = new TextColumn("Domicilio", true, false, 100);
     public static final IColumn numeroCuit = new TextColumn("NumeroCuit", true, false, 50);
-    public static final IColumn idCanalAgrupa =  new IntegerColumn("IdCanalAgrupa", true, true, 6);
+    public static final IColumn idCanalAgrupa =  new IntegerColumn("IdCanalAgrupa", true, false, 6);
     public static final IColumn descCanalAgrupa = new TextColumn("DescCanalAgrupa", true, false, 100);
-    public static final IColumn idSubCanalAgrupa =  new IntegerColumn("IdSubCanalAgrupa", true, true, 6);
+    public static final IColumn idSubCanalAgrupa =  new IntegerColumn("IdSubCanalAgrupa", true, false, 6);
     public static final IColumn descSubCanalAgrupa = new TextColumn("DescSubCanalAgrupa", true, false, 100);
     public static final IColumn fechaAlta = new DateColumn("FechaAlta", true, false);
     public static final IColumn anulado = new BooleanColumn("Anulado", true, false);
@@ -63,7 +63,7 @@ public class Clientes extends AbstractFile {
     }
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         return new ValidationResult();
     }
 }

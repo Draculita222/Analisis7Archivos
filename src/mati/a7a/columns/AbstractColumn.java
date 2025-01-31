@@ -32,7 +32,12 @@ public abstract class AbstractColumn implements IColumn {
         return isUnique;
     }
 
-    protected void validateIsRequiered(ValidationResult result, String input) {
+    @Override
+	public String toString() {
+		return "AbstractColumn [name=" + name + ", isRequired=" + isRequired + ", isUnique=" + isUnique + "]";
+	}
+
+	protected void validateIsRequiered(ValidationResult result, String input) {
         if(isRequired && ( input.isEmpty())) {
             result.addError(new ValidationError(this, "Columna requerida sin valor"));;
         }

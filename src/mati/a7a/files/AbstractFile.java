@@ -138,11 +138,12 @@ public abstract class AbstractFile implements IFile {
             	IColumn targetColumn = null;
             	for(IColumn c : columns) {
             		if(c.getName().equals(maybeColumnName)) {
-            		 targetColumn = c;
+	            		targetColumn = c;
+	            		break;
             		}
             	}
             	if(targetColumn == null) {
-            		loadingErrors.add(new FileValidationError(this, "nombre columna invalido: " + maybeColumnName, Optional.empty()));
+            		loadingErrors.add(new FileValidationError(this, "Se ignora columna: " + maybeColumnName + ". Verificar que esto sea correcto", Optional.empty()));
             	} else {
             		columnsOrderedLikeFile.put(i, targetColumn);
             	}
@@ -161,7 +162,7 @@ public abstract class AbstractFile implements IFile {
                 String[] rowTokens = line.split(";");
                 if(rowTokens.length < columnsOrderedLikeFile.size()) {
                     loadingErrors.add(new FileValidationError(this,
-                            "Cantidad inválida de columnas", Optional.of(lineNumber)));
+                            "Cantidad inválida de columnas en linea ", Optional.of(lineNumber)));
                     continue;
                 }
 
@@ -220,7 +221,7 @@ public abstract class AbstractFile implements IFile {
         return outer;
     }
 
-    public abstract ValidationResult customValidateFile() throws ProcessException;
+    public abstract ValidationResult customValidateFile();
 
     public int getMinimunColumnc() {
     	int i =0;
@@ -248,6 +249,15 @@ public abstract class AbstractFile implements IFile {
 
     public List<String> getAllValuesForColumn(IColumn column) {
         return getAllValuesForColumn(column, Optional.empty());
+    }
+    
+    public List<IndexAndValue> getAllValuesForColumnWithIndex(IColumn column) {
+    	 List<Row> rows = getRows();
+         List<IndexAndValue> result = new ArrayList<>();
+         for(int i = 0; i < rows.size(); i++) {
+            result.add(new IndexAndValue(i, rows.get(i).map.getOrDefault(column, null)));
+         }
+         return result;
     }
 
     public List<String> getAllValuesForColumn(IColumn column, Optional<Integer> excludedRow) {

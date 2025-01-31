@@ -30,7 +30,7 @@ public class Articulos extends AbstractFile {
     }
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         return new ValidationResult();
     }
 }

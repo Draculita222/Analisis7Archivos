@@ -127,7 +127,7 @@ public class Comprobantes extends AbstractFile {
     }
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         ValidationResult result = new ValidationResult();
 
         Map<UniqueKey, Integer> keyCount = new HashMap<>();

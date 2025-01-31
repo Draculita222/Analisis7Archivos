@@ -1,5 +1,10 @@
 package mati.a7a.files.impl;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import mati.a7a.columns.DateColumn;
 import mati.a7a.columns.IColumn;
 import mati.a7a.columns.IntegerColumn;
@@ -9,12 +14,7 @@ import mati.a7a.files.FileStereotype;
 import mati.a7a.main.ProcessException;
 import mati.a7a.results.ValidationError;
 import mati.a7a.results.ValidationResult;
-import mati.a7a.validations.AtLeastOneEntry;
 import mati.a7a.validations.UniqueA2UniqueB;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public class RutasDeVenta extends AbstractFile {
 
@@ -38,19 +38,21 @@ public class RutasDeVenta extends AbstractFile {
                     fechaDesde
             );
 
-    private List<String> clientCodes;
-
     public RutasDeVenta(FileStereotype stereotype, String name) {
         super(stereotype, name, columns);
     }
 
-
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile(){
         ValidationResult validation = new ValidationResult();
 
         UniqueA2UniqueB uniqueA2UniqueB = new UniqueA2UniqueB();
-        Map<String, List<String>> result = uniqueA2UniqueB.analize(codigoRuta, codigoPersonal, getAllValuesForColumn(codigoRuta), getAllValuesForColumn(codigoPersonal));
+        Map<String, List<String>> result = new HashMap<>();
+		try {
+			result = uniqueA2UniqueB.analize(codigoRuta, codigoPersonal, getAllValuesForColumnWithIndex(codigoRuta), getAllValuesForColumnWithIndex(codigoPersonal));
+		} catch (ProcessException e) {
+			validation.addError(new ValidationError(codigoRuta, e.getMessage()));
+		}
         if(!result.isEmpty()) {
             String message = uniqueA2UniqueB.createMessage(codigoRuta, codigoPersonal, result);
             validation.addError(new ValidationError(codigoRuta, message));

@@ -39,11 +39,11 @@ public class ClientesRuta extends AbstractFile {
     }
 
     public void setSucursales(List<String> sucursales) {
-        ((ReferentialPredefColumn) PersonalComercial.codigoSucursal).overridePossibleValues(sucursales);
+        ((ReferentialPredefColumn) ClientesRuta.codigoSucursal).overridePossibleValues(sucursales);
     }
 
     public void setCodigoFuerza(List<String> fuerzas) {
-        ((ReferentialPredefColumn) PersonalComercial.codigoFuerza).overridePossibleValues(fuerzas);
+        ((ReferentialPredefColumn) ClientesRuta.codigoFuerza).overridePossibleValues(fuerzas);
     }
 
     public void setClientCodes(List<String> clientCodes) {
@@ -51,7 +51,7 @@ public class ClientesRuta extends AbstractFile {
     }
 
     @Override
-    public ValidationResult customValidateFile() throws ProcessException {
+    public ValidationResult customValidateFile() {
         ValidationResult validation = new ValidationResult();
 
         AtLeastOneEntry atLeastOneEntry = new AtLeastOneEntry();
