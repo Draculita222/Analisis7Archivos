@@ -22,7 +22,7 @@ public class FileLoader {
         Map<FileStereotype, File> result = new HashMap<>();
         for(String fileName : list) {
             FileStereotype stereotype = null;
-            for(FileStereotype s : FileStereotype.values()) {
+            for(FileStereotype s : FileStereotype.getLoadingOrder()) {
                 if(fileName.startsWith(s.baseName)) {
                     stereotype = s;
                     break;

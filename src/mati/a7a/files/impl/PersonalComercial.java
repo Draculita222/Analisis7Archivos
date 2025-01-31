@@ -21,7 +21,7 @@ public class PersonalComercial extends AbstractFile {
     public static final IColumn cargo = new CargoColumn("Cargo", true, false);
     public static final IColumn anulado = new BooleanColumn("Anulado", true, false);
     public static final IColumn codigoPersonalSuperior = new IntegerColumn("CodigoPersonalSuperior", true, false, 10);
-    public static final IColumn codigoFuerza = new IntegerColumn("CodigoFuerza", true, false, 10);
+    public static final IColumn codigoFuerza = new ReferentialPredefColumn("CodigoFuerza", true, false, 10);
 
     private static final List<IColumn> columns =
             Arrays.asList(
@@ -48,19 +48,19 @@ public class PersonalComercial extends AbstractFile {
 
         Map<String, String> persona2Cargo = new HashMap<>();
         for(Row r : getRows()) {
-            String vendedor = r.map().get(codigoPersonal);
-            String cargo = r.map().get(PersonalComercial.cargo);
+            String vendedor = r.map.get(codigoPersonal);
+            String cargo = r.map.get(PersonalComercial.cargo);
             persona2Cargo.put(vendedor, cargo);
         }
 
         for(Row r : getRows()) {
 
-            String cargoActual = r.map().get(PersonalComercial.cargo);
-            String refSuperior = r.map().get(codigoPersonalSuperior);
+            String cargoActual = r.map.get(PersonalComercial.cargo);
+            String refSuperior = r.map.get(codigoPersonalSuperior);
             if(!persona2Cargo.containsKey(refSuperior)) {
                 result.addError(
                         new ValidationError(codigoPersonal,
-                                "El personal con código " + r.map().get(codigoPersonal) + " apunta a un superior inexistente"));
+                                "El personal con código " + r.map.get(codigoPersonal) + " apunta a un superior inexistente"));
                 continue;
             }
 
@@ -71,7 +71,7 @@ public class PersonalComercial extends AbstractFile {
             if(invalid) {
                 result.addError(
                         new ValidationError(codigoPersonal,
-                                "El personal con código " + r.map().get(codigoPersonal)
+                                "El personal con código " + r.map.get(codigoPersonal)
                                         + " no puede ser supervisado por " + refSuperior));
             }
         }

@@ -52,11 +52,11 @@ public class StockFisico extends AbstractFile {
         Map<String, List<String>> articulosPorDeposito = new HashMap<>();
 
         for(Row r : getRows()) {
-            String codigoDeposito = r.map().get(StockFisico.codigoDeposito);
+            String codigoDeposito = r.map.get(StockFisico.codigoDeposito);
             if(!articulosPorDeposito.containsKey(codigoDeposito)) {
                 articulosPorDeposito.put(codigoDeposito, new ArrayList<>());
             }
-            articulosPorDeposito.get(codigoDeposito).add(r.map().get(codigoArticulo));
+            articulosPorDeposito.get(codigoDeposito).add(r.map.get(codigoArticulo));
         }
 
         for(Map.Entry<String, List<String>> entry : articulosPorDeposito.entrySet()) {

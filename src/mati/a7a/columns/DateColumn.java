@@ -32,7 +32,7 @@ public class DateColumn extends AbstractColumn {
                 }
             }
             // MES
-            String month = split[0];
+            String month = split[1];
             if (month.length() > 2) {
                 validationResult.addError(new ValidationError(this, "Formato de MES incorrecto"));
             } else {
@@ -46,7 +46,7 @@ public class DateColumn extends AbstractColumn {
                 }
             }
             // AÑO
-            String year = split[0];
+            String year = split[2];
             if (year.length() > 4) {
                 validationResult.addError(new ValidationError(this, "Formato de AÑO incorrecto"));
             } else {

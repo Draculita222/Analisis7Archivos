@@ -52,7 +52,7 @@ public class A7A implements ActionListener {
         if(e.getSource().equals(chooseFolderButton)) {
 
             String code = codeField.getText();
-            if(code.isEmpty() || code.isBlank()) {
+            if(code.isEmpty() ) {
                 showError("Código de empresa vacio");
                 return;
             }
@@ -72,6 +72,7 @@ public class A7A implements ActionListener {
                 } catch (ProcessException processException) {
                     showError(processException.getMessage());
                 } catch (Exception ex) {
+                	ex.printStackTrace();
                     showError(ex.getMessage());
                 }
             }
@@ -107,49 +108,56 @@ public class A7A implements ActionListener {
             String name = rawFile.getName();
             IFile oneFile = null;
             switch (stereotype) {
-                case ARTICULO -> {
+                case ARTICULO : {
                     oneFile = new Articulos(stereotype, name);
                     oneFile.load(rawFile);
                     codigosArticulos = ((Articulos) oneFile).getAllValuesForColumn(Articulos.codigoArticulo);
+                    break;
                 }
-                case CLIENTES -> {
+                case CLIENTES : {
                     oneFile = new Clientes(stereotype, name);
                     oneFile.load(rawFile);
                     clientCodes = ((Clientes) oneFile).getAllValuesForColumn(Clientes.codigoCliente);
                     sucursales = ((Clientes) oneFile).getAllValuesForColumn(Clientes.codigoSucursal);
+                    break;
                 }
-                case PERSONAL_COMERCIAL -> {
+                case PERSONAL_COMERCIAL : {
                     oneFile = new PersonalComercial(stereotype, name);
                     oneFile.load(rawFile);
                     ((PersonalComercial) oneFile).setSucursales(sucursales);
                     fuerzas = ((PersonalComercial) oneFile).getAllValuesForColumn(PersonalComercial.codigoFuerza);
                     personal = ((PersonalComercial) oneFile).getAllValuesForColumn(PersonalComercial.codigoPersonal);
+                    break;
                 }
-                case CLIENTES_EN_RUTA -> {
+                case CLIENTES_EN_RUTA : {
                     oneFile = new ClientesRuta(stereotype, name);
                     oneFile.load(rawFile);
                     ((ClientesRuta) oneFile).setClientCodes(clientCodes);
                     ((ClientesRuta) oneFile).setSucursales(sucursales);
                     ((ClientesRuta) oneFile).setCodigoFuerza(fuerzas);
+                    break;
                 }
-                case RUTAS_DE_VENTA -> {
+                case RUTAS_DE_VENTA : {
                     oneFile = new RutasDeVenta(stereotype, name);
                     oneFile.load(rawFile);
                     rutas = ((RutasDeVenta) oneFile).getAllValuesForColumn(RutasDeVenta.codigoRuta);
+                    break;
                 }
-                case STOCK_FISICO -> {
+                case STOCK_FISICO : {
                     oneFile = new StockFisico(stereotype, name);
                     oneFile.load(rawFile);
                     ((StockFisico) oneFile).setCodigosArticulos(codigosArticulos);
                     ((StockFisico) oneFile).setCodigosArticulos(codigosArticulos);
+                    break;
                 }
-                case COMPROBANTES -> {
+                case COMPROBANTES : {
                     oneFile = new Comprobantes(stereotype, name);
                     ((Comprobantes) oneFile).setArticulos(codigosArticulos);
                     ((Comprobantes) oneFile).setClientes(clientCodes);
                     ((Comprobantes) oneFile).setPersonal(personal);
                     ((Comprobantes) oneFile).setSucursales(sucursales);
                     ((Comprobantes) oneFile).setFuerzas(fuerzas);
+                    break;
                 }
             }
 

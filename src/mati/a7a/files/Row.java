@@ -4,5 +4,11 @@ import mati.a7a.columns.IColumn;
 
 import java.util.Map;
 
-public record Row (Map<IColumn, String> map) {
+public class Row {
+	
+	public Map<IColumn, String> map;
+	
+	public Row(Map<IColumn, String> map) {
+		this.map = map;
+	}
 }

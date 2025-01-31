@@ -1,19 +1,29 @@
 package mati.a7a.files;
 
-import mati.a7a.columns.IColumn;
-import mati.a7a.main.ProcessException;
-import mati.a7a.results.*;
-import mati.a7a.validations.UniqueA;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Scanner;
+
+import mati.a7a.columns.IColumn;
+import mati.a7a.files.impl.Clientes;
+import mati.a7a.main.ProcessException;
+import mati.a7a.results.FileValidationError;
+import mati.a7a.results.ValidationError;
+import mati.a7a.results.ValidationResult;
+import mati.a7a.validations.UniqueA;
 
 public abstract class AbstractFile implements IFile {
 
     private final FileStereotype stereotype;
     private final String name;
     private final List<IColumn> columns;
+    private final Map<Integer, IColumn> columnsOrderedLikeFile;
     private final List<FileValidationError> loadingErrors = new ArrayList<>();
     private List<Row> rows = new ArrayList<>();
 
@@ -21,6 +31,7 @@ public abstract class AbstractFile implements IFile {
         this.stereotype = stereotype;
         this.name = name;
         this.columns = columns;
+        columnsOrderedLikeFile = new HashMap<>();
     }
 
     @Override
@@ -119,9 +130,26 @@ public abstract class AbstractFile implements IFile {
             }
 
             String header = scanner.nextLine();
-            String[] headerTokens = header.split(",");
-            validateHeader(headerTokens);
-
+            String[] headerTokens = header.split(";");
+            
+            int i = -1;
+            for(String maybeColumnName : headerTokens) {
+            	i++;
+            	IColumn targetColumn = null;
+            	for(IColumn c : columns) {
+            		if(c.getName().equals(maybeColumnName)) {
+            		 targetColumn = c;
+            		}
+            	}
+            	if(targetColumn == null) {
+            		loadingErrors.add(new FileValidationError(this, "nombre columna invalido: " + maybeColumnName, Optional.empty()));
+            	} else {
+            		columnsOrderedLikeFile.put(i, targetColumn);
+            	}
+            }
+            if(this instanceof Clientes) {
+            	int x = 0;
+            }
             if(!scanner.hasNextLine()) {
                 loadingErrors.add(new FileValidationError(this, "Archivo vacio",Optional.empty()));
             }
@@ -130,20 +158,24 @@ public abstract class AbstractFile implements IFile {
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
-                String[] rowTokens = line.split(",");
-                if(rowTokens.length != columns.size()) {
+                String[] rowTokens = line.split(";");
+                if(rowTokens.length < columnsOrderedLikeFile.size()) {
                     loadingErrors.add(new FileValidationError(this,
                             "Cantidad inválida de columnas", Optional.of(lineNumber)));
                     continue;
                 }
 
                 Map<IColumn, String> rowMap = new HashMap<>();
-                int tokenIdx = 0;
-                for(IColumn column : columns) {
-                    rowMap.put(column, rowTokens[tokenIdx]);
-                    tokenIdx++;
+                for(Entry<Integer, IColumn> entry : columnsOrderedLikeFile.entrySet()) {
+                	Integer pos = entry.getKey();
+                	IColumn column = entry.getValue();
+                	if(rowTokens[pos] == null || rowTokens[pos].isEmpty()) 
+                		{int x = 0; 
+                		continue;}
+                    rowMap.put(column, rowTokens[pos]);
                 }
                 rows.add(new Row(rowMap));
+                lineNumber++;
             }
         } catch (FileNotFoundException e) {
             loadingErrors.add(new FileValidationError(this, "Archivo no encontrado", Optional.empty()));
@@ -155,13 +187,13 @@ public abstract class AbstractFile implements IFile {
         ValidationResult outer = new ValidationResult();
         List<Row> rows = getRows();
         for(int i = 0; i < rows.size(); i++) {
-            Map<IColumn, String> map = rows.get(i).map();
+            Map<IColumn, String> map = rows.get(i).map;
             for(Map.Entry<IColumn, String> entry : map.entrySet()) {
                 ValidationResult result = entry.getKey().validateData(entry.getValue());
 
                 if(!result.isValid()) {;
                     for(ValidationError err : result.getErrors()) {
-                        outer.addError(new ValidationError(err.column(), "Linea " + (i + 1) + " -> " + err.message()));
+                        outer.addError(new ValidationError(err.column, "Linea " + (i + 1) + " -> " + err.message));
                     }
                 }
             }
@@ -182,7 +214,7 @@ public abstract class AbstractFile implements IFile {
         ValidationResult customResults = customValidateFile();
         if(!customResults.isValid()) {
             for(ValidationError err : customResults.getErrors()) {
-                outer.addError(new ValidationError(err.column(), err.message()));
+                outer.addError(new ValidationError(err.column, err.message));
             }
         }
         return outer;
@@ -190,21 +222,29 @@ public abstract class AbstractFile implements IFile {
 
     public abstract ValidationResult customValidateFile() throws ProcessException;
 
-    private void validateHeader(String[] headerTokens) throws ProcessException {
-        if(headerTokens.length != columns.size()) {
-            throw new ProcessException("Columnas en archivo " + getBaseName() + ": "+ headerTokens.length + ". Esperadas: " + columns.size());
-        }
-        int i = 0;
-        for(IColumn column : columns) {
-            String columnName = column.getName();
-            if(!columnName.equals(headerTokens[i])) {
-                loadingErrors.add(
-                        new FileValidationError(this,
-                                "Nombre de columna incorrecta. Recibido: " + headerTokens[i] + ". Esperado:" + columnName, Optional.empty()));
-            }
-            i++;
-        }
+    public int getMinimunColumnc() {
+    	int i =0;
+    	for(IColumn c : columns) {
+    		if(c.isRequired()) i++;
+    	}
+    	return i;
     }
+    
+//    private void validateHeader(String[] headerTokens) throws ProcessException {
+//        if(headerTokens.length < getMinimunColumnc()) {
+//            throw new ProcessException("Columnas en archivo " + getBaseName() + ": "+ headerTokens.length + ". Esperadas al menos: " + columns.size());
+//        }
+//        int i = 0;
+//        for(IColumn column : columns) {
+//            String columnName = column.getName();
+//            if(!columnName.equals(headerTokens[i])) {
+//                loadingErrors.add(
+//                        new FileValidationError(this,
+//                                "Nombre de columna incorrecta. Recibido: " + headerTokens[i] + ". Esperado:" + columnName, Optional.empty()));
+//            }
+//            i++;
+//        }
+//    }
 
     public List<String> getAllValuesForColumn(IColumn column) {
         return getAllValuesForColumn(column, Optional.empty());
@@ -217,7 +257,8 @@ public abstract class AbstractFile implements IFile {
             if(excludedRow.isPresent() && excludedRow.get().equals(i)) {
                 continue;
             }
-            result.add(rows.get(i).map().get(column));
+            if(rows.get(i).map.get(column)!=null)
+            	result.add(rows.get(i).map.get(column));
         }
         return result;
     }

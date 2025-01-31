@@ -19,4 +19,9 @@ public enum FileStereotype {
         return new FileStereotype[]
                 { ARTICULO, CLIENTES, PERSONAL_COMERCIAL, CLIENTES_EN_RUTA, RUTAS_DE_VENTA, STOCK_FISICO, COMPROBANTES };
     }
+    
+    public static final FileStereotype[] getLoadingOrder() {
+        return new FileStereotype[]
+                { CLIENTES_EN_RUTA, ARTICULO, CLIENTES, PERSONAL_COMERCIAL,  RUTAS_DE_VENTA, STOCK_FISICO, COMPROBANTES };
+    }
 }

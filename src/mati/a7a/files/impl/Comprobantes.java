@@ -15,13 +15,29 @@ import java.util.Map;
 
 public class Comprobantes extends AbstractFile {
 
-    public record UniqueKey (String tipoComprobante,
-                             String letraComprobante,
-                             String serieComprobante,
-                             String numeroComprobante,
-                             String numeroLinea) {
-        public static UniqueKey create(Row row) {
-            Map<IColumn, String> map = row.map();
+    public class UniqueKey {
+    	String tipoComprobante;
+    
+                             String letraComprobante;
+                             String serieComprobante;
+                             String numeroComprobante;
+                             String numeroLinea;
+                             
+        public UniqueKey() {}
+        public UniqueKey(String tipoComprobante,
+									String letraComprobante,
+									String serieComprobante,
+									String numeroComprobante, String numeroLinea) {
+								super();
+								this.tipoComprobante = tipoComprobante;
+								this.letraComprobante = letraComprobante;
+								this.serieComprobante = serieComprobante;
+								this.numeroComprobante = numeroComprobante;
+								this.numeroLinea = numeroLinea;
+							}
+
+		public UniqueKey create(Row row) {
+            Map<IColumn, String> map = row.map;
             return new UniqueKey(
                     map.get(Comprobantes.tipoComprobante),
                     map.get(Comprobantes.letraComprobante),
@@ -116,7 +132,7 @@ public class Comprobantes extends AbstractFile {
 
         Map<UniqueKey, Integer> keyCount = new HashMap<>();
         for(Row r : getRows()) {
-            UniqueKey uniqueKey = UniqueKey.create(r);
+            UniqueKey uniqueKey = new UniqueKey().create(r);
             if(!keyCount.containsKey(uniqueKey)) {
                 keyCount.put(uniqueKey, 1);
             } else {

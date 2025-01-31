@@ -33,7 +33,7 @@ public abstract class AbstractColumn implements IColumn {
     }
 
     protected void validateIsRequiered(ValidationResult result, String input) {
-        if(isRequired && (input.isBlank() || input.isEmpty())) {
+        if(isRequired && ( input.isEmpty())) {
             result.addError(new ValidationError(this, "Columna requerida sin valor"));;
         }
     }

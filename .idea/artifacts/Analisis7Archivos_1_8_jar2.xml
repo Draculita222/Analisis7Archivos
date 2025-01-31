@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Analisis7Archivos_1_8:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/Analisis7Archivos_1_8_jar2</output-path>
+    <root id="archive" name="Analisis7Archivos.jar">
+      <element id="module-output" name="Analisis7Archivos" />
+    </root>
+  </artifact>
+</component>

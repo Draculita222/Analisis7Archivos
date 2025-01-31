@@ -51,7 +51,7 @@ public class ReportBuilder {
                 fileErrors = new ArrayList<>();
             }
             for(FileValidationError error : fileErrors) {
-                result += pe + error.message() + (error.line().isPresent() ? error.line().get() : "");
+                result += pe + error.message + (error.line.isPresent() ? error.line.get() : "");
             }
 
             List<ValidationError> columnsErrors = validationErrors.get(stereotype);
@@ -59,7 +59,7 @@ public class ReportBuilder {
                 columnsErrors = new ArrayList<>();
             }
             for(ValidationError error : columnsErrors) {
-                result += pe + error.message() + " en columna " + error.column().getName();
+                result += pe + error.message + " en columna " + error.column.getName();
             }
 
             if(fileErrors.isEmpty() && columnsErrors.isEmpty()) {
