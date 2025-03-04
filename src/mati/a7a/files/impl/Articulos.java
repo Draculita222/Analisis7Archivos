@@ -7,7 +7,9 @@ import mati.a7a.main.ProcessException;
 import mati.a7a.results.ValidationResult;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Articulos extends AbstractFile {
 
@@ -27,6 +29,16 @@ public class Articulos extends AbstractFile {
 
     public Articulos(FileStereotype stereotype, String name) {
         super(stereotype, name, columns);
+    }
+
+    public Map<String, String> getUnidadesXBulto() {
+        Map<String, String> result = new HashMap<>();
+        List<String> articulos = this.getAllValuesForColumn(codigoArticulo);
+        List<String> uxb = this.getAllValuesForColumn(unidadesXBulto);
+        for(int i = 0; i < articulos.size(); i++) {
+            result.put(articulos.get(i), uxb.get(i));
+        }
+        return result;
     }
 
     @Override

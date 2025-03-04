@@ -1,0 +1,61 @@
+Reporte
+
+
+Articulos
+	El archivo está ok
+Clientes
+	En linea 103 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 148 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 469 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	Cantidad inválida de columnas en linea 491
+PersonalComercial
+	El archivo está ok
+ClientesRuta
+	El archivo está ok
+RutasDeVenta
+	No se reconoce nombre columna: "Periodicidad". Verificar que esto sea correcto
+	No se reconoce nombre columna: "Semana". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeLunes". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeMartes". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeMiercoles". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeJueves". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeViernes". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeSabado". Verificar que esto sea correcto
+	No se reconoce nombre columna: "AtiendeDomingo". Verificar que esto sea correcto
+	En linea 1 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 2 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 3 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 4 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 5 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 6 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 7 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 8 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 9 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 10 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 11 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 12 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 13 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 14 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 15 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 16 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 17 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 18 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 19 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 20 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 21 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 22 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 23 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 24 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 25 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 26 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 27 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 28 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 29 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 30 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 31 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+	En linea 32 se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos
+StockFisico
+	En la columna CodigoDeposito se encontraron los siguientes errores:
+		La cantidad de articulos para el depósito 1 debería ser 132
+Comprobantes
+	El archivo está ok

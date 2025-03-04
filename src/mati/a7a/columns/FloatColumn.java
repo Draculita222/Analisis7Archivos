@@ -28,7 +28,7 @@ public class FloatColumn extends AbstractColumn {
     @Override
     public ValidationResult validateData(String input) {
         ValidationResult result = new ValidationResult();
-        if(input.isEmpty()) {
+        if(input.isEmpty() ) {
         	return result;
         }
         boolean hasDecimals = false;

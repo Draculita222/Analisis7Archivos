@@ -13,6 +13,12 @@ public class DateColumn extends AbstractColumn {
     public ValidationResult validateData(String input) {
         ValidationResult validationResult = new ValidationResult();
         this.validateIsRequiered(validationResult, input);
+
+        // 12/02
+        if(true) {
+            return validationResult;
+        }
+
         if(input.isEmpty()) {
         	return validationResult;
         }

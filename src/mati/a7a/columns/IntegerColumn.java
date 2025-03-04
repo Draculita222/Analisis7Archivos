@@ -29,9 +29,9 @@ public class IntegerColumn extends AbstractColumn {
         }
 
         try {
-            int value = Integer.parseInt(input);
+            long value = Integer.parseInt(input);
         } catch (NumberFormatException nfe) {
-            result.addError(new ValidationError(this, "No se puede convertir el dato ingresado a número"));
+            result.addError(new ValidationError(this, "No se puede convertir el dato ingresado a número entero"));
             return result;
         }
 

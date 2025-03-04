@@ -16,27 +16,29 @@ import java.util.Map;
 public class Comprobantes extends AbstractFile {
 
     public class UniqueKey {
-    	String tipoComprobante;
-    
-                             String letraComprobante;
-                             String serieComprobante;
-                             String numeroComprobante;
-                             String numeroLinea;
-                             
-        public UniqueKey() {}
-        public UniqueKey(String tipoComprobante,
-									String letraComprobante,
-									String serieComprobante,
-									String numeroComprobante, String numeroLinea) {
-								super();
-								this.tipoComprobante = tipoComprobante;
-								this.letraComprobante = letraComprobante;
-								this.serieComprobante = serieComprobante;
-								this.numeroComprobante = numeroComprobante;
-								this.numeroLinea = numeroLinea;
-							}
+        String tipoComprobante;
 
-		public UniqueKey create(Row row) {
+        String letraComprobante;
+        String serieComprobante;
+        String numeroComprobante;
+        String numeroLinea;
+
+        public UniqueKey() {
+        }
+
+        public UniqueKey(String tipoComprobante,
+                         String letraComprobante,
+                         String serieComprobante,
+                         String numeroComprobante, String numeroLinea) {
+            super();
+            this.tipoComprobante = tipoComprobante;
+            this.letraComprobante = letraComprobante;
+            this.serieComprobante = serieComprobante;
+            this.numeroComprobante = numeroComprobante;
+            this.numeroLinea = numeroLinea;
+        }
+
+        public UniqueKey create(Row row) {
             Map<IColumn, String> map = row.map;
             return new UniqueKey(
                     map.get(Comprobantes.tipoComprobante),
@@ -44,7 +46,7 @@ public class Comprobantes extends AbstractFile {
                     map.get(Comprobantes.serieComprobante),
                     map.get(Comprobantes.numeroComprobante),
                     map.get(Comprobantes.numeroLinea)
-                    );
+            );
         }
 
         @Override
@@ -102,6 +104,8 @@ public class Comprobantes extends AbstractFile {
                     anulado
             );
 
+    private Map<String, String> unidadesPorBultoEnArticulos;
+
     public Comprobantes(FileStereotype stereotype, String name) {
         super(stereotype, name, columns);
     }
@@ -126,6 +130,10 @@ public class Comprobantes extends AbstractFile {
         ((ReferentialPredefColumn) codigoSucursal).overridePossibleValues(sucursales);
     }
 
+    public void setUnidadesPorBulto(Map<String, String> unidadesPorBulto) {
+        this.unidadesPorBultoEnArticulos = unidadesPorBulto;
+    }
+
     @Override
     public ValidationResult customValidateFile() {
         ValidationResult result = new ValidationResult();
@@ -143,6 +151,16 @@ public class Comprobantes extends AbstractFile {
         for(Map.Entry<UniqueKey, Integer> entry : keyCount.entrySet()) {
             if(entry.getValue() > 1) {
                 result.addError(new ValidationError(numeroComprobante, "Clave repetida: " + entry.getKey()));
+            }
+        }
+
+        /// //////////////////////////////////////////////////////////////////////
+
+        List<String> articulos = this.getAllValuesForColumn(codigoArticulo);
+        List<String> uxb = this.getAllValuesForColumn(unidadesPorBulto);
+        for(int i = 0; i < articulos.size(); i++) {
+            if(!uxb.get(i).equals(this.unidadesPorBultoEnArticulos.get(articulos.get(i)))) {
+                result.addError(new ValidationError(unidadesPorBulto, "Las unidades por bulto declaradas para el artículo: " + articulos.get(i) + " difieren a las declaradas en el archivo \"Articulos\""));
             }
         }
 

@@ -130,7 +130,12 @@ public abstract class AbstractFile implements IFile {
             }
 
             String header = scanner.nextLine();
+            boolean splitByComma = false;
             String[] headerTokens = header.split(";");
+            if(headerTokens.length == 1) {
+                headerTokens = header.split(",");
+                splitByComma = true;
+            }
             
             int i = -1;
             for(String maybeColumnName : headerTokens) {
@@ -143,7 +148,7 @@ public abstract class AbstractFile implements IFile {
             		}
             	}
             	if(targetColumn == null) {
-            		loadingErrors.add(new FileValidationError(this, "Se ignora columna: " + maybeColumnName + ". Verificar que esto sea correcto", Optional.empty()));
+            		loadingErrors.add(new FileValidationError(this, "No se reconoce nombre columna: \"" + maybeColumnName + "\". Verificar que esto sea correcto", Optional.empty()));
             	} else {
             		columnsOrderedLikeFile.put(i, targetColumn);
             	}
@@ -159,10 +164,17 @@ public abstract class AbstractFile implements IFile {
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
-                String[] rowTokens = line.split(";");
+                String[] rowTokens = line.split(splitByComma ? "," : ";");
                 if(rowTokens.length < columnsOrderedLikeFile.size()) {
                     loadingErrors.add(new FileValidationError(this,
                             "Cantidad inválida de columnas en linea ", Optional.of(lineNumber)));
+                    lineNumber++;
+                    continue;
+                }
+                if(rowTokens.length > columnsOrderedLikeFile.size()) {
+                    loadingErrors.add(new FileValidationError(this,
+                            "En linea " + lineNumber + " se encuentran más columnas que las definidas en la cabecera. Posible error: un valor contiene un caracter especial. Verificar que los errores reportados en esta linea sean correctos" , Optional.empty()));
+                    lineNumber++;
                     continue;
                 }
 

@@ -4,10 +4,10 @@ import mati.a7a.columns.*;
 import mati.a7a.files.AbstractFile;
 import mati.a7a.files.FileStereotype;
 import mati.a7a.main.ProcessException;
+import mati.a7a.results.ValidationError;
 import mati.a7a.results.ValidationResult;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Clientes extends AbstractFile {
 
@@ -28,8 +28,8 @@ public class Clientes extends AbstractFile {
     public static final IColumn tipoContribuyente = new TipoContibuyenteColumn("TipoContribuyente", true, false);
     public static final IColumn codListaPrecio = new IntegerColumn("CodListaPrecio", true, false, 10);
     public static final IColumn idTipoDocumentoCliente = new TipoDocumentoColumn("IdTipoDocumentoCliente", true, false);
-    public static final IColumn codigoLocalidad = new TextColumn("CodigoLocalidad", true, true, 20);
-    public static final IColumn descripcionLocalidad = new TextColumn("DescripcionLocalidad", true, false, 100);
+    public static final IColumn codigoLocalidad = new TextColumn("CodigoLocalidad", true, false, 20);
+    public static final IColumn descripcionLocalidad = new TextColumn("DescripcionLocalidad", false, false, 100);
     public static final IColumn codigoProvincia = new TextColumn("CodigoProvincia", true, false, 50);
     public static final IColumn descProvincia = new TextColumn("DescProvincia", true, false, 50);
 
@@ -64,6 +64,23 @@ public class Clientes extends AbstractFile {
 
     @Override
     public ValidationResult customValidateFile() {
-        return new ValidationResult();
+        ValidationResult validationResult = new ValidationResult();
+        List<String> local = this.getAllValuesForColumn(codigoLocalidad);
+        List<String> desc = this.getAllValuesForColumn(descripcionLocalidad);
+        Map<String, String> keys = new HashMap<>();
+        Set<String> invalidLocals = new HashSet<>();
+        int idx = 0;
+        for(String l : local) {
+            if(!keys.containsKey(l)) {
+                keys.put(l, desc.get(idx));
+            } else if(!keys.get(l).equals(desc.get(idx))) {
+                invalidLocals.add(l);
+            }
+            idx++;
+        }
+        for(String l : invalidLocals) {
+            validationResult.addError(new ValidationError(codigoLocalidad, "La localidad " + l + " tiene distintas descripciones asociadas"));
+        }
+        return validationResult;
     }
 }

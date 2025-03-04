@@ -102,6 +102,7 @@ public class A7A implements ActionListener {
         List<String> personal = null;
         List<String> fuerzas = null;
         List<String> rutas = null;
+        Map<String, String> unidadesXBultoEnArticulos = null;
 
         for(FileStereotype stereotype : processingOrder) {
             File rawFile = loadedFiles.get(stereotype);
@@ -112,6 +113,7 @@ public class A7A implements ActionListener {
                     oneFile = new Articulos(stereotype, name);
                     oneFile.load(rawFile);
                     codigosArticulos = ((Articulos) oneFile).getAllValuesForColumn(Articulos.codigoArticulo);
+                    unidadesXBultoEnArticulos = ((Articulos) oneFile).getUnidadesXBulto();
                     break;
                 }
                 case CLIENTES : {
@@ -156,6 +158,7 @@ public class A7A implements ActionListener {
                     ((Comprobantes) oneFile).setPersonal(personal);
                     ((Comprobantes) oneFile).setSucursales(sucursales);
                     ((Comprobantes) oneFile).setFuerzas(fuerzas);
+                    ((Comprobantes) oneFile).setUnidadesPorBulto(unidadesXBultoEnArticulos);
                     break;
                 }
             }
@@ -179,7 +182,7 @@ public class A7A implements ActionListener {
         }
 
         try {
-            reportBuilder.saveReport(selectedDirectory);
+            reportBuilder.saveReportGroupByColumn(selectedDirectory);
         } catch (IOException e) {
             throw new ProcessException(e.getMessage());
         }

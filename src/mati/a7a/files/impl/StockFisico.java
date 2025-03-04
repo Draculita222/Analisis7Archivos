@@ -12,7 +12,7 @@ import java.util.*;
 
 public class StockFisico extends AbstractFile {
 
-    public static final IColumn codigoDeposito = new IntegerColumn("CodigoDeposito", true, true, 10);
+    public static final IColumn codigoDeposito = new IntegerColumn("CodigoDeposito", true, false, 10);
     public static final IColumn codigoArticulo = new ReferentialPredefColumn("CodigoArticulo", true, true, 10);
     public static final IColumn vencimientoLote = new DateColumn("VencimientoLote", true, false);
     public static final IColumn cantidadDecimal = new FloatColumn("CantidadDecimal", true, false, 9, 6);
